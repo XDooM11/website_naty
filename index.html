@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Naty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Dancing Script", sans-serif;
+            background: #ffffee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding-top: 50px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #77cdb9;
+            font-size: 2em;
+            text-align: center;
+            padding: 0 10px;
+            margin-bottom: 0.2em;
+        }
+
+        p {
+            color: #333333;
+            font-size: 1.2em;
+            text-align: center;
+            padding: 0 10px;
+            margin: 0 0 20px 0;
+        }
+
+        h2 {
+            color: #77cdb9;
+            font-size: 1.5em;
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        .timer-container, .love-container, .chat-container {
+            width: 90%;
+            max-width: 900px;
+            padding: 20px;
+            margin: 20px auto;
+            background: #fff;
+            border: 4px solid #77cdb9;
+            border-radius: 20px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .countdown {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .time-box {
+            background: #ffffee;
+            padding: 10px 5px;
+            border-radius: 12px;
+            min-width: 60px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .time-box span {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .time-box small {
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .love-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .love-item {
+            background-color: #ffffee;
+            border-radius: 15px;
+            padding: 10px;
+            width: 100%;
+            max-width: 100%;
+            min-height: 50px;
+            font-size: 1em;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            word-break: break-word;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Quiz */
+        #quiz div {
+            width: 100%;
+            max-width: 100%;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .answer {
+            font-size: 1em;
+        }
+
+        /* Chat */
+        .chat-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .chat-small-box {
+            flex: 1 1 140px;
+            min-width: 140px;
+            padding: 10px;
+            font-size: 1em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: #ffffee;
+            border-radius: 12px;
+        }
+
+        .chat-small-box p {
+            font-weight: bold;
+            color: #77cdb9;
+            margin: 0;
+        }
+
+        .chat-small-box span {
+            margin-top: 5px;
+            display: block;
+            color: #333;
+        }
+
+        /* Buttons */
+        #cat-button, #submit, #music-button1, #music-button2 {
+            font-size: 1.5em;
+            padding: 10px 15px;
+            margin-top: 15px;
+            border-radius: 12px;
+            border: 3px solid #77cdb9;
+            background: #fff;
+            color: #77cdb9;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #cat-button:hover {
+            box-shadow: 0 8px 20px rgba(119, 205, 185, 0.6);
+            background-color: #f0fdfd;
+            transform: translateY(-3px);
+        }
+
+        /* Media query pro mobil */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6em; }
+            p, h2 { font-size: 1em; }
+            .time-box span { font-size: 1em; }
+            .time-box small { font-size: 0.8em; }
+            .love-item { font-size: 0.9em; min-height: 45px; padding: 8px; }
+            #cat-button, #submit, #music-button1, #music-button2 { font-size: 1.2em; padding: 8px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>MÁ MILÁ NATY,</h1>
+<p>už od doby, kdy jsem tě poprvé spatřil vím, že jsi tím nejkrásnějším, co se mi kdy v životě přihodilo...</p>
+
+<!-- TIMER BOX -->
+<div class="timer-container">
+    <h2>DOBA, OD KDY TI PATŘÍ MÉ SRDCE</h2>
+    <div class="countdown">
+        <div class="time-box"><span id="years">0</span><small>Years</small></div>
+        <div class="time-box"><span id="months">0</span><small>Months</small></div>
+        <div class="time-box"><span id="days">0</span><small>Days</small></div>
+        <div class="time-box"><span id="hours">0</span><small>Hours</small></div>
+        <div class="time-box"><span id="minutes">0</span><small>Minutes</small></div>
+        <div class="time-box"><span id="seconds">0</span><small>Seconds</small></div>
+    </div>
+</div>
+
+<!-- BOX – VĚCI, KTERÉ MILUJI -->
+<div class="love-container">
+    <h2>VĚCI, KTERÉ NA TOBĚ MILUJI</h2>
+    <p>Zde je jen malá část z nich:</p>
+    <div class="love-list">
+        <div class="love-item">🌹 Tvůj nádherný úsměv</div>
+        <div class="love-item">❤️ Pamatuješ si vše, co ti řeknu</div>
+        <div class="love-item">💕 Tvůj humor, který rozzáří úsměvy všech lidí okolo</div>
+        <div class="love-item">🔍 Všímáš si na mě detailů, které většina lidí přehlédne</div>
+        <div class="love-item">💃 Nebojíš se být sama sebou</div>
+        <div class="love-item">❤️ Nejen, že slyšíš moje slova, ale opravdu jim rozumíš</div>
+        <div class="love-item">🔥 Jsi neuvěřitelně sexy!</div>
+    </div>
+</div>
+
+<button id="cat-button">KOČIČKYYY</button>
+
+<!-- AUDIO + YOUTUBE -->
+<div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+    <div style="text-align: center;">
+        <p>Vidím dům a vidím nás...</p>
+        <button id="music-button1">🔊</button>
+        <audio id="audio1" src="skladba1.mp3"></audio>
+        <div id="youtube1-container"></div>
+    </div>
+    <div style="text-align: center;">
+        <p>Když ti zpívám, když tě líbám...</p>
+        <button id="music-button2">🔊</button>
+        <audio id="audio2" src="skladba2.mp3"></audio>
+        <div id="youtube2-container"></div>
+    </div>
+</div>
+
+<!-- CHAT STATISTIKY -->
+<div class="chat-container">
+    <h2>STATISTIKY NAŠEHO CHATU</h2>
+    <div class="chat-inner">
+        <div class="chat-small-box">
+            <p>TOTAL MESSAGES</p>
+            <span id="total-messages">0</span>
+        </div>
+        <div class="chat-small-box">
+            <p>TOP SENDER</p>
+            <span id="top-sender">-</span>
+        </div>
+        <div class="chat-small-box">
+            <p>DENNÍ PRŮMĚR</p>
+            <span id="average-per-day">0</span>
+        </div>
+        <div class="chat-small-box">
+            <p>PRVNÍ ZPRÁVA</p>
+            <span id="first-message-date">-</span>
+        </div>
+    </div>
+</div>
+
+<h2>💖 KVÍÍÍZ 💖</h2>
+<div id="quiz"></div>
+<button id="submit">Vyhodnotit kvíz</button>
+<p id="results" style="font-weight:bold; margin-top:20px; text-align:center;"></p>
+
+<script>
+    const startDate = new Date("2024-06-27T00:00:00");
+
+    function updateCountdown() {
+        const now = new Date();
+        let diff = now - startDate;
+        const seconds = Math.floor(diff / 1000) % 60;
+        const minutes = Math.floor(diff / (1000*60)) % 60;
+        const hours = Math.floor(diff / (1000*60*60)) % 24;
+        const daysTotal = Math.floor(diff / (1000*60*60*24));
+        const years = Math.floor(daysTotal / 365);
+        const months = Math.floor((daysTotal % 365) / 30);
+        const days = (daysTotal % 365) % 30;
+
+        document.getElementById("years").textContent = String(years).padStart(2,'0');
+        document.getElementById("months").textContent = String(months).padStart(2,'0');
+        document.getElementById("days").textContent = String(days).padStart(2,'0');
+        document.getElementById("hours").textContent = String(hours).padStart(2,'0');
+        document.getElementById("minutes").textContent = String(minutes).padStart(2,'0');
+        document.getElementById("seconds").textContent = String(seconds).padStart(2,'0');
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    const catEmojis = ['😺','😸','😹','😻','😼','😽','🙀'];
+    const button = document.getElementById('cat-button');
+    button.addEventListener('click', () => {
+        for(let i=0;i<80;i++){ createCatEmoji(); }
+    });
+    function createCatEmoji(){
+        const cat = document.createElement('div');
+        cat.textContent = catEmojis[Math.floor(Math.random()*catEmojis.length)];
+        cat.style.position = 'fixed';
+        const rect = button.getBoundingClientRect();
+        cat.style.left = rect.left+rect.width/2+'px';
+        cat.style.top = rect.top+rect.height/2+'px';
+        cat.style.fontSize = (15+Math.random()*20)+'px';
+        cat.style.pointerEvents = 'none';
+        cat.style.transition = 'transform 3s ease-out, opacity 3s ease-out';
+        document.body.appendChild(cat);
+        const xMove = (Math.random()-0.5)*window.innerWidth;
+        const yMove = (Math.random()-0.5)*window.innerHeight;
+        setTimeout(()=>{cat.style.transform=`translate(${xMove}px, ${yMove}px) rotate(${Math.random()*720}deg)`; cat.style.opacity=0;},10);
+        setTimeout(()=>{document.body.removeChild(cat);},3000);
+    }
+
+    // AUDIO + YouTube
+    const audio1 = document.getElementById('audio1');
+    const button1 = document.getElementById('music-button1');
+    const youtube1Container = document.getElementById('youtube1-container');
+    let youtube1Loaded=false;
+    button1.addEventListener('click', () => {
+        audio1.play();
+        if(!youtube1Loaded){
+            youtube1Container.innerHTML = `<iframe width="100%" height="135" style="border-radius:10px;border:none;"
+                src="https://www.youtube.com/embed/VaFSCqfFpdM" allowfullscreen></iframe>`;
+            youtube1Loaded=true;
+        }
+    });
+
+    const audio2 = document.getElementById('audio2');
+    const button2 = document.getElementById('music-button2');
+    const youtube2Container = document.getElementById('youtube2-container');
+    let youtube2Loaded=false;
+    button2.addEventListener('click', () => {
+        audio2.play();
+        if(!youtube2Loaded){
+            youtube2Container.innerHTML = `<iframe width="100%" height="135" style="border-radius:10px;border:none;"
+                src="https://www.youtube.com/embed/PViTphZWnqw" allowfullscreen></iframe>`;
+            youtube2Loaded=true;
+        }
+    });
+
+    // CHAT STATISTIKY
+    fetch('./message_1_decoded.json')
+        .then(res=>res.json())
+        .then(data=>{
+            const messages = data.messages || [];
+            document.getElementById('total-messages').textContent = messages.length;
+            const counts = {};
+            messages.forEach(m=>{ const sender=m.sender_name||'Unknown'; counts[sender]=(counts[sender]||0)+1; });
+            let topSender="-"; let topCount=0;
+            for(const sender in counts){ if(counts[sender]>topCount){topCount=counts[sender]; topSender=sender;} }
+            document.getElementById('top-sender').textContent = `${topSender} (${topCount} zpráv)`;
+            const timestamps = messages.map(m=>m.timestamp_ms).filter(Boolean);
+            if(timestamps.length){
+                const firstDateMs = Math.min(...timestamps);
+                const lastDateMs = Math.max(...timestamps);
+                const daysActive = Math.ceil((lastDateMs-firstDateMs)/(1000*60*60*24))||1;
+                document.getElementById('average-per-day').textContent = (messages.length/daysActive).toFixed(2);
+                const firstDate = new Date(firstDateMs);
+                document.getElementById('first-message-date').textContent = firstDate.toLocaleDateString('cs-CZ',{year:'numeric',month:'long',day:'numeric'});
+            }
+        })
+        .catch(err=>console.error('Chyba při načítání JSON:',err));
+
+    // KVÍZ
+    const quizQuestions = [
+        {question:"Kde proběhlo naše první rande?",answers:["Na univerzitní fakultě","V kavárně","V restauraci","V aquaparku"],correctAnswer:0},
+        {question:"Kde jsme si poprvé dali pusu?",answers:["V Olomouci","V Novém Jičíně","V Brně","V Maláze"],correctAnswer:2},
+        {question:"Kam jsme jeli spolu poprvé na cyklovýlet?",answers:["Do Lednice","Na Tour de France","Do Mrazáku","K tomu rybníku"],correctAnswer:3},
+        {question:"V jaké kavárně/cukrárně jsme si dali spolu poprvé dortík?",answers:["Owl’s Café","FreshUP Bistro","Cafe na cucky","Ollies"],correctAnswer:0},
+        {question:"Kde jsme si dali první zmrzku?",answers:["Zmrzlina u Šutráku","Zmrzlina u benzinky","Tomivo Gelato","McDonald’s"],correctAnswer:2},
+        {question:"Kde jsme strávili náš oficiálně první den našeho vztahu?",answers:["Na lavičce v parku","V restauraci","V kavárně","V hospodě"],correctAnswer:0},
+        {question:"Co je naše nejoblíbenější společná aktivita?",answers:["Sledování filmů a seriálů","Vaření/Pečení","Cestování","Vše výše zmíněné"],correctAnswer:3}
+    ];
+
+    function buildQuiz(){
+        const quizContainer=document.getElementById("quiz");
+        quizContainer.innerHTML="";
+        quizQuestions.forEach((q,qi)=>{
+            const questionBox=document.createElement("div");
+            questionBox.style.background="#fff";
+            questionBox.style.border="3px solid #77cdb9";
+            questionBox.style.borderRadius="15px";
+            questionBox.style.padding="15px";
+            questionBox.style.margin="10px auto";
+            questionBox.style.boxShadow="0 4px 8px rgba(0,0,0,0.1)";
+            questionBox.style.fontSize="1em";
+
+            const qText=document.createElement("h3");
+            qText.textContent=q.question;
+            qText.style.color="#333";
+            questionBox.appendChild(qText);
+
+            const answersBox=document.createElement("div");
+            answersBox.style.display="grid";
+            answersBox.style.gap="8px";
+            answersBox.style.marginTop="10px";
+
+            q.answers.forEach((answer,ai)=>{
+                const ansDiv=document.createElement("div");
+                ansDiv.textContent=answer;
+                ansDiv.classList.add("answer");
+                ansDiv.dataset.qi=qi;
+                ansDiv.dataset.ai=ai;
+                ansDiv.style.padding="8px";
+                ansDiv.style.borderRadius="10px";
+                ansDiv.style.background="#f9f9f9";
+                ansDiv.style.cursor="pointer";
+                ansDiv.style.transition="0.3s";
+                ansDiv.style.border="2px solid transparent";
+                ansDiv.addEventListener("click",()=>selectAnswer(ansDiv));
+                answersBox.appendChild(ansDiv);
+            });
+
+            questionBox.appendChild(answersBox);
+            quizContainer.appendChild(questionBox);
+        });
+    }
+
+    function selectAnswer(el){
+        const parent=el.parentNode;
+        [...parent.children].forEach(c=>{ c.style.borderColor="transparent"; c.style.background="#f9f9f9"; });
+        el.style.borderColor="#77cdb9";
+        el.style.background="#e0f7f3";
+        el.classList.add("selected");
+    }
+
+    function showResults(){
+        let numCorrect=0;
+        let allCorrect=true;
+        document.querySelectorAll(".answer.selected").forEach(el=>{
+            const qi=el.dataset.qi;
+            const ai=el.dataset.ai;
+            if(parseInt(ai)===quizQuestions[qi].correctAnswer){
+                el.style.background="#c8f7c5"; el.style.borderColor="green"; numCorrect++;
+            }else{ el.style.background="#f7c5c5"; el.style.borderColor="red"; allCorrect=false; }
+        });
+        const results=document.getElementById("results");
+        results.textContent=`Máš ${numCorrect} z ${quizQuestions.length} správně.`;
+        if(allCorrect && numCorrect===quizQuestions.length){ results.textContent="Vše jsi uhodla. Za odměnu tu máš pár kytiček! 🌸"; launchFlowers(); }
+    }
+
+    function launchFlowers(){
+        const flowers=['🌸','🌼','🌺','🌹','💐'];
+        for(let i=0;i<400;i++){
+            const flower=document.createElement("div");
+            flower.textContent=flowers[Math.floor(Math.random()*flowers.length)];
+            flower.style.position="fixed";
+            flower.style.left=window.innerWidth/2+"px";
+            flower.style.top=window.innerHeight/2+"px";
+            flower.style.fontSize=(20+Math.random()*30)+"px";
+            flower.style.pointerEvents="none";
+            document.body.appendChild(flower);
+            const angle=Math.random()*2*Math.PI;
+            const distance=Math.random()*Math.max(window.innerWidth,window.innerHeight);
+            const xMove=Math.cos(angle)*distance;
+            const yMove=Math.sin(angle)*distance;
+            const fly=flower.animate([{transform:`translate(0,0) scale(1)`,opacity:1},{transform:`translate(${xMove}px,${yMove}px) scale(0.5)`,opacity:0}],{duration:7000,easing:"ease-out",iterations:1});
+            fly.onfinish=()=>flower.remove();
+        }
+    }
+
+    buildQuiz();
+    document.getElementById("submit").addEventListener("click",showResults);
+</script>
+
+</body>
+</html>
